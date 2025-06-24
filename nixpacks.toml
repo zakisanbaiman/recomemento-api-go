@@ -1,9 +1,10 @@
 [phases.setup]
-nixPkgs = ['go_1_23']
+nixPkgs = ['go_1_21']
 
 [phases.build]
 cmds = [
     'go mod download',
+    'go install github.com/swaggo/swag/cmd/swag@latest',
     'swag init',
     'go build -o main .'
 ]
@@ -12,4 +13,5 @@ cmds = [
 cmd = './main'
 
 [variables]
-CGO_ENABLED = '1' 
+CGO_ENABLED = '1'
+GOTOOLCHAIN = 'local' 
