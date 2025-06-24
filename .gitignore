@@ -192,5 +192,9 @@ tmp/
 recomemento-api
 recomemento-api-go
 
+# Delve debugger files
+__debug
+__debug_bin*
+
 # Log files
 *.log

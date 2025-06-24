@@ -1,0 +1,36 @@
+# Git関連
+.git
+.gitignore
+
+# ドキュメント
+README.md
+*.md
+
+# ローカル設定
+.vscode/
+.env
+
+# ビルド成果物
+recomemento-api
+main
+tmp/
+
+# Delve debugger files
+__debug
+__debug_bin*
+
+# テストファイル
+*_test.go
+coverage.out
+
+# 開発ツール設定
+air.toml
+Makefile
+
+# Node.js関連（もしあれば）
+node_modules/
+npm-debug.log
+
+# OS固有
+.DS_Store
+Thumbs.db 

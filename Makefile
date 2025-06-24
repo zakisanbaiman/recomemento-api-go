@@ -34,6 +34,14 @@ run: build
 run-direct:
 	go run $(MAIN_FILE)
 
+# デバッグ実行（Delve）
+debug:
+	$(shell go env GOPATH)/bin/dlv debug $(MAIN_FILE) --listen=:2345 --headless --api-version=2 --accept-multiclient
+
+# デバッグ実行（対話モード）
+debug-interactive:
+	$(shell go env GOPATH)/bin/dlv debug $(MAIN_FILE)
+
 # テスト実行
 test:
 	go test -v ./...
@@ -91,6 +99,8 @@ help:
 	@echo "  make dev          - 開発モード（ホットリロード）"
 	@echo "  make run          - アプリケーションの実行"
 	@echo "  make run-direct   - 直接実行（ビルドなし）"
+	@echo "  make debug        - デバッグ実行（リモートデバッグ）"
+	@echo "  make debug-interactive - デバッグ実行（対話モード）"
 	@echo "  make build        - ビルド"
 	@echo "  make build-prod   - プロダクション用ビルド"
 	@echo "  make test         - テスト実行"

@@ -1,0 +1,15 @@
+[phases.setup]
+nixPkgs = ['go_1_21']
+
+[phases.build]
+cmds = [
+    'go mod download',
+    'swag init',
+    'go build -o main .'
+]
+
+[phases.start]
+cmd = './main'
+
+[variables]
+CGO_ENABLED = '1' 
