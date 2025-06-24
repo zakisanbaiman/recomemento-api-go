@@ -1,8 +1,11 @@
 # マルチステージビルドでサイズ最適化
-FROM golang:1.21-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
 # 作業ディレクトリ設定
 WORKDIR /app
+
+# 必要なパッケージをインストール
+RUN apk add --no-cache gcc musl-dev sqlite-dev
 
 # 依存関係ファイルをコピー
 COPY go.mod go.sum ./
@@ -24,14 +27,16 @@ RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -ldflags="-w -s" -o 
 FROM alpine:latest
 
 # 必要なパッケージインストール
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates sqlite
 
 # 作業ディレクトリ作成
 WORKDIR /root/
 
-# バイナリとデータディレクトリをコピー
+# バイナリをコピー
 COPY --from=builder /app/main .
-COPY --from=builder /app/data ./data
+
+# データディレクトリを作成
+RUN mkdir -p ./data
 
 # ポート公開
 EXPOSE 3001
