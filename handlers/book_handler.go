@@ -305,4 +305,15 @@ func (h *BookHandler) RecommendBook(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, response)
+}
+
+// AppError represents a custom error type
+type AppError struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Detail  string `json:"detail,omitempty"`
+}
+
+func (e *AppError) Error() string {
+	return e.Message
 } 
