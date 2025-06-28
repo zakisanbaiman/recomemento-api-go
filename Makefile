@@ -46,10 +46,53 @@ debug-interactive:
 test:
 	go test -v ./...
 
+# ユニットテストのみ実行
+test-unit:
+	go test -v ./handlers ./models ./dto
+
+# 統合テストを含むテスト実行
+test-integration:
+	RUN_INTEGRATION_TESTS=1 go test -v ./...
+
 # テストカバレッジ
 test-coverage:
 	go test -v -coverprofile=coverage.out ./...
 	go tool cover -html=coverage.out
+
+# 統合テスト含むカバレッジ
+test-coverage-integration:
+	RUN_INTEGRATION_TESTS=1 go test -v -coverprofile=coverage.out ./...
+	go tool cover -html=coverage.out
+
+# 並列テスト実行
+test-parallel:
+	go test -v -parallel 4 ./...
+
+# ベンチマークテスト
+test-bench:
+	go test -bench=. -benchmem ./...
+
+# テスト詳細実行
+test-verbose:
+	go test -v -count=1 ./...
+
+# 特定パッケージのテスト
+test-handlers:
+	go test -v ./handlers
+
+test-models:
+	go test -v ./models
+
+test-integration-only:
+	RUN_INTEGRATION_TESTS=1 go test -v -run "TestIntegration" ./...
+
+# テスト結果をJUnit形式で出力（CI/CD用）
+test-junit:
+	go test -v ./... 2>&1 | go-junit-report > test-results.xml
+
+# テストのwatch実行（airを使用）
+test-watch:
+	air -c .air.test.toml
 
 # Swaggerドキュメント生成
 docs:
